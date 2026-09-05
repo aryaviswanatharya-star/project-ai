@@ -1,91 +1,346 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 
 <head>
 
-    <title>Movie AI Recommendation System</title>
+    <meta charset="UTF-8">
 
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
+    <title>Movie AI | Recommendation System</title>
+
+
     <style>
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
 
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
 
         body {
 
-            margin: 0;
-
-            font-family: Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
 
             min-height: 100vh;
 
+            color: white;
+
             background:
+                radial-gradient(
+                    circle at top right,
+                    rgba(139, 0, 0, 0.45),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom left,
+                    rgba(90, 0, 0, 0.35),
+                    transparent 30%
+                ),
                 linear-gradient(
                     135deg,
-                    #141e30,
-                    #243b55
+                    #000000 0%,
+                    #120000 45%,
+                    #8B0000 100%
                 );
 
-            color: white;
+            background-attachment: fixed;
+
+            overflow-x: hidden;
         }
 
+
+
+        /* =====================================================
+           CINEMATIC LIGHT EFFECTS
+        ===================================================== */
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            width: 350px;
+            height: 350px;
+
+            top: -150px;
+            left: -150px;
+
+            background: rgba(139, 0, 0, 0.25);
+
+            border-radius: 50%;
+
+            filter: blur(100px);
+
+            pointer-events: none;
+        }
+
+
+        body::after {
+
+            content: "";
+
+            position: fixed;
+
+            width: 300px;
+            height: 300px;
+
+            right: -120px;
+            bottom: -100px;
+
+            background: rgba(255, 0, 0, 0.18);
+
+            border-radius: 50%;
+
+            filter: blur(100px);
+
+            pointer-events: none;
+        }
+
+
+
+        /* =====================================================
+           MAIN CONTAINER
+        ===================================================== */
 
         .container {
 
-            width: 90%;
+            width: 92%;
 
-            max-width: 1100px;
+            max-width: 1200px;
 
             margin: auto;
 
-            padding: 40px 20px;
+            padding: 45px 20px 30px;
+
+            position: relative;
+
+            z-index: 2;
         }
 
 
-        .header {
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 65px;
+
+            padding: 15px 20px;
+
+            background: rgba(0, 0, 0, 0.35);
+
+            border: 1px solid rgba(255, 255, 255, 0.08);
+
+            border-radius: 14px;
+
+            backdrop-filter: blur(12px);
+        }
+
+
+        .logo {
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            letter-spacing: 1px;
+        }
+
+
+        .logo span {
+
+            color: #ff3030;
+        }
+
+
+        .nav-text {
+
+            font-size: 13px;
+
+            color: #aaa;
+
+            letter-spacing: 1px;
+
+            text-transform: uppercase;
+        }
+
+
+
+        /* =====================================================
+           HERO SECTION
+        ===================================================== */
+
+        .hero {
 
             text-align: center;
 
-            margin-bottom: 35px;
+            margin-bottom: 45px;
         }
 
 
-        .header h1 {
+        .hero-icon {
 
-            font-size: 45px;
+            font-size: 55px;
 
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+
+            animation: movieFloat 3s ease-in-out infinite;
         }
 
 
-        .header p {
+        .hero h1 {
+
+            font-size: clamp(42px, 7vw, 75px);
+
+            font-weight: 900;
+
+            letter-spacing: 4px;
+
+            text-transform: uppercase;
+
+            line-height: 1;
+
+            text-shadow:
+                0 0 10px rgba(255,255,255,0.25),
+                0 0 30px rgba(255,0,0,0.35);
+        }
+
+
+        .hero h1 span {
+
+            color: #ff2222;
+        }
+
+
+        .hero p {
+
+            margin-top: 18px;
 
             font-size: 18px;
 
-            color: #cccccc;
+            color: #cfcfcf;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        .hero-line {
+
+            width: 100px;
+
+            height: 3px;
+
+            margin: 22px auto 0;
+
+            background: #b00000;
+
+            border-radius: 10px;
+
+            box-shadow: 0 0 15px rgba(255,0,0,0.6);
+        }
+
+
+
+        /* =====================================================
+           SEARCH AREA
+        ===================================================== */
+
+        .search-wrapper {
+
+            max-width: 760px;
+
+            margin: auto;
+
+            position: relative;
         }
 
 
         .search-box {
 
-            max-width: 650px;
+            padding: 32px;
 
-            margin: auto;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.10),
+                    rgba(0,0,0,0.25)
+                );
 
-            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.14);
 
-            background: rgba(255,255,255,0.10);
+            border-radius: 22px;
 
-            border-radius: 20px;
-
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(18px);
 
             box-shadow:
-                0 10px 30px rgba(0,0,0,0.3);
+                0 20px 60px rgba(0,0,0,0.5),
+                inset 0 1px 0 rgba(255,255,255,0.08);
+        }
+
+
+        .search-heading {
+
+            text-align: center;
+
+            margin-bottom: 25px;
+        }
+
+
+        .search-heading h2 {
+
+            font-size: 23px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .search-heading p {
+
+            color: #999;
+
+            font-size: 14px;
+        }
+
+
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .form-row {
+
+            display: grid;
+
+            grid-template-columns: 0.8fr 1.2fr;
+
+            gap: 15px;
+        }
+
+
+        .form-group {
+
+            margin-bottom: 5px;
         }
 
 
@@ -93,15 +348,17 @@
 
             display: block;
 
-            text-align: left;
+            margin-bottom: 9px;
 
-            margin-top: 15px;
-
-            margin-bottom: 8px;
-
-            font-size: 17px;
+            font-size: 13px;
 
             font-weight: bold;
+
+            color: #ddd;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
         }
 
 
@@ -110,112 +367,272 @@
 
             width: 100%;
 
-            padding: 15px;
+            height: 54px;
 
-            border: none;
+            padding: 0 16px;
 
-            border-radius: 10px;
+            border: 1px solid #444;
 
-            font-size: 16px;
+            border-radius: 11px;
 
-            margin-bottom: 10px;
+            outline: none;
+
+            font-size: 15px;
+
+            background: rgba(255,255,255,0.96);
+
+            color: #111;
+
+            transition: 0.3s;
         }
 
 
-        button {
+        select:focus,
+        input:focus {
+
+            border-color: #d00000;
+
+            box-shadow:
+                0 0 0 3px rgba(180,0,0,0.20);
+        }
+
+
+        input::placeholder {
+
+            color: #777;
+        }
+
+
+
+        /* =====================================================
+           RECOMMEND BUTTON
+        ===================================================== */
+
+        .recommend-btn {
 
             width: 100%;
 
-            padding: 15px;
-
-            margin-top: 15px;
-
-            border: none;
-
-            border-radius: 10px;
-
-            font-size: 18px;
-
-            font-weight: bold;
-
-            cursor: pointer;
-
-            background: #ffffff;
-
-            color: #141e30;
-        }
-
-
-        button:hover {
-
-            transform: scale(1.02);
-        }
-
-
-        .error {
-
-            text-align: center;
+            height: 56px;
 
             margin-top: 20px;
 
-            padding: 15px;
+            border: none;
 
-            background: rgba(255,0,0,0.2);
+            border-radius: 11px;
 
-            border-radius: 10px;
+            cursor: pointer;
 
-            color: #ffb3b3;
+            font-size: 16px;
+
+            font-weight: bold;
+
+            letter-spacing: 0.5px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #700000,
+                    #c00000,
+                    #700000
+                );
+
+            box-shadow:
+                0 8px 25px rgba(100,0,0,0.45);
+
+            transition: all 0.3s ease;
         }
 
 
-        .result-title {
+        .recommend-btn:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 12px 35px rgba(180,0,0,0.55);
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #900000,
+                    #e00000,
+                    #900000
+                );
+        }
+
+
+        .recommend-btn:active {
+
+            transform: scale(0.98);
+        }
+
+
+
+        /* =====================================================
+           ERROR MESSAGE
+        ===================================================== */
+
+        .error {
+
+            max-width: 760px;
+
+            margin: 25px auto;
+
+            padding: 16px 20px;
 
             text-align: center;
 
-            margin-top: 50px;
+            border-radius: 12px;
+
+            color: #ffbcbc;
+
+            background: rgba(120,0,0,0.35);
+
+            border: 1px solid rgba(255,80,80,0.25);
+
+            animation: fadeUp 0.5s ease;
+        }
+
+
+
+        /* =====================================================
+           RESULTS HEADER
+        ===================================================== */
+
+        .results-section {
+
+            margin-top: 70px;
+        }
+
+
+        .results-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
 
             margin-bottom: 25px;
 
-            font-size: 30px;
+            padding-bottom: 15px;
+
+            border-bottom: 1px solid rgba(255,255,255,0.10);
         }
 
+
+        .results-header h2 {
+
+            font-size: 27px;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        .results-header h2 span {
+
+            color: #ff2525;
+        }
+
+
+        .results-header p {
+
+            color: #999;
+
+            font-size: 13px;
+        }
+
+
+
+        /* =====================================================
+           MOVIE GRID
+        ===================================================== */
 
         .movies {
 
             display: grid;
 
             grid-template-columns:
-                repeat(auto-fit, minmax(180px, 1fr));
+                repeat(auto-fit, minmax(205px, 1fr));
 
             gap: 25px;
         }
 
 
+
+        /* =====================================================
+           MOVIE CARD
+        ===================================================== */
+
         .movie-card {
 
-            background: rgba(255,255,255,0.10);
-
-            border-radius: 15px;
+            position: relative;
 
             overflow: hidden;
 
-            box-shadow:
-                0 8px 25px rgba(0,0,0,0.3);
+            border-radius: 17px;
 
-            transition: 0.3s;
+            background:
+                linear-gradient(
+                    160deg,
+                    rgba(255,255,255,0.11),
+                    rgba(0,0,0,0.40)
+                );
+
+            border: 1px solid rgba(255,255,255,0.10);
+
+            box-shadow:
+                0 15px 35px rgba(0,0,0,0.45);
+
+            transition:
+                transform 0.35s ease,
+                box-shadow 0.35s ease;
+
+            animation: cardAppear 0.7s ease both;
+        }
+
+
+        .movie-card:nth-child(2) {
+            animation-delay: 0.08s;
+        }
+
+
+        .movie-card:nth-child(3) {
+            animation-delay: 0.16s;
+        }
+
+
+        .movie-card:nth-child(4) {
+            animation-delay: 0.24s;
+        }
+
+
+        .movie-card:nth-child(5) {
+            animation-delay: 0.32s;
         }
 
 
         .movie-card:hover {
 
-            transform: translateY(-8px);
+            transform: translateY(-12px);
 
+            box-shadow:
+                0 25px 50px rgba(0,0,0,0.65),
+                0 0 20px rgba(140,0,0,0.20);
         }
 
 
+
+        /* =====================================================
+           POSTER
+        ===================================================== */
+
         .poster {
 
-            height: 240px;
+            height: 310px;
+
+            position: relative;
 
             display: flex;
 
@@ -223,9 +640,40 @@
 
             justify-content: center;
 
-            background: #303b50;
+            overflow: hidden;
 
-            font-size: 55px;
+            background:
+                linear-gradient(
+                    145deg,
+                    #111,
+                    #350000
+                );
+
+            font-size: 60px;
+        }
+
+
+        .poster::after {
+
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+
+            right: 0;
+
+            bottom: 0;
+
+            height: 90px;
+
+            background:
+                linear-gradient(
+                    transparent,
+                    rgba(0,0,0,0.8)
+                );
+
+            pointer-events: none;
         }
 
 
@@ -236,79 +684,439 @@
             height: 100%;
 
             object-fit: cover;
+
+            transition: transform 0.5s ease;
         }
 
 
+        .movie-card:hover .poster img {
+
+            transform: scale(1.08);
+        }
+
+
+
+        /* =====================================================
+           MOVIE INFO
+        ===================================================== */
+
         .movie-info {
 
-            padding: 15px;
+            padding: 17px;
         }
 
 
         .movie-info h3 {
 
-            margin: 0 0 10px 0;
-
             font-size: 19px;
+
+            line-height: 1.3;
+
+            margin-bottom: 13px;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
         }
 
 
-        .movie-info p {
-
-            margin: 7px 0;
-
-            color: #dddddd;
-
-            font-size: 14px;
-        }
-
-
-        .similarity {
+        .genre {
 
             display: inline-block;
 
-            margin-top: 8px;
+            padding: 5px 9px;
 
-            padding: 6px 10px;
+            margin-bottom: 10px;
 
             border-radius: 20px;
 
-            background: rgba(255,255,255,0.15);
+            font-size: 11px;
 
             font-weight: bold;
 
-            font-size: 13px;
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            color: #ffdddd;
+
+            background: rgba(139,0,0,0.65);
+
+            border: 1px solid rgba(255,80,80,0.15);
         }
 
+
+        .rating {
+
+            font-size: 14px;
+
+            color: #ddd;
+
+            margin-bottom: 14px;
+        }
+
+
+        .rating strong {
+
+            color: white;
+        }
+
+
+
+        /* =====================================================
+           SIMILARITY
+        ===================================================== */
+
+        .similarity-area {
+
+            margin-top: 5px;
+        }
+
+
+        .similarity-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 7px;
+
+            font-size: 12px;
+
+            color: #aaa;
+        }
+
+
+        .similarity-value {
+
+            color: #ff4040;
+
+            font-weight: bold;
+        }
+
+
+        .progress {
+
+            width: 100%;
+
+            height: 7px;
+
+            overflow: hidden;
+
+            border-radius: 20px;
+
+            background: rgba(255,255,255,0.12);
+        }
+
+
+        .progress-bar {
+
+            height: 100%;
+
+            width: 80%;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #650000,
+                    #e00000
+                );
+
+            box-shadow:
+                0 0 10px rgba(220,0,0,0.5);
+
+            transition: width 1s ease;
+        }
+
+
+
+        /* =====================================================
+           TRY AGAIN
+        ===================================================== */
 
         .try-again {
 
             text-align: center;
 
-            margin-top: 35px;
+            margin: 50px 0 25px;
         }
 
 
         .try-again a {
 
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 13px 25px;
+
+            border-radius: 10px;
+
             color: white;
 
             text-decoration: none;
 
-            font-size: 17px;
+            font-size: 14px;
+
+            font-weight: bold;
+
+            background: rgba(255,255,255,0.08);
+
+            border: 1px solid rgba(255,255,255,0.15);
+
+            transition: 0.3s;
         }
 
 
-        @media(max-width:600px) {
+        .try-again a:hover {
 
-            .header h1 {
+            background: #8B0000;
 
-                font-size: 32px;
+            border-color: #b00000;
+
+            transform: translateY(-3px);
+        }
+
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .footer {
+
+            text-align: center;
+
+            margin-top: 60px;
+
+            padding: 25px 10px;
+
+            color: #777;
+
+            font-size: 12px;
+
+            border-top: 1px solid rgba(255,255,255,0.08);
+
+            letter-spacing: 0.5px;
+        }
+
+
+        .footer strong {
+
+            color: #bbb;
+        }
+
+
+
+        /* =====================================================
+           ANIMATIONS
+        ===================================================== */
+
+        @keyframes movieFloat {
+
+            0%, 100% {
+                transform: translateY(0);
             }
+
+            50% {
+                transform: translateY(-7px);
+            }
+        }
+
+
+        @keyframes fadeUp {
+
+            from {
+
+                opacity: 0;
+
+                transform: translateY(20px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform: translateY(0);
+            }
+        }
+
+
+        @keyframes cardAppear {
+
+            from {
+
+                opacity: 0;
+
+                transform: translateY(25px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform: translateY(0);
+            }
+        }
+
+
+
+        /* =====================================================
+           TABLET
+        ===================================================== */
+
+        @media(max-width: 800px) {
+
+            .navbar {
+
+                margin-bottom: 45px;
+            }
+
+
+            .form-row {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .poster {
+
+                height: 280px;
+            }
+
+
+            .results-header {
+
+                display: block;
+            }
+
+
+            .results-header p {
+
+                margin-top: 6px;
+            }
+
+        }
+
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media(max-width: 600px) {
+
+            .container {
+
+                width: 94%;
+
+                padding: 20px 5px 25px;
+            }
+
+
+            .navbar {
+
+                padding: 12px 15px;
+
+                margin-bottom: 40px;
+            }
+
+
+            .nav-text {
+
+                display: none;
+            }
+
+
+            .hero-icon {
+
+                font-size: 45px;
+            }
+
+
+            .hero h1 {
+
+                font-size: 42px;
+
+                letter-spacing: 2px;
+            }
+
+
+            .hero p {
+
+                font-size: 14px;
+
+                line-height: 1.5;
+            }
+
 
             .search-box {
 
-                padding: 20px;
+                padding: 22px 18px;
+            }
+
+
+            .movies {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+                gap: 15px;
+            }
+
+
+            .poster {
+
+                height: 230px;
+            }
+
+
+            .movie-info {
+
+                padding: 13px;
+            }
+
+
+            .movie-info h3 {
+
+                font-size: 15px;
+            }
+
+
+            .genre {
+
+                font-size: 9px;
+            }
+
+
+            .rating {
+
+                font-size: 12px;
+            }
+
+        }
+
+
+
+        @media(max-width: 400px) {
+
+            .movies {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .poster {
+
+                height: 300px;
             }
 
         }
@@ -324,86 +1132,190 @@
 <div class="container">
 
 
-    <!-- HEADER -->
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
 
-    <div class="header">
+    <div class="navbar">
 
-        <h1>🎬 Movie AI</h1>
+        <div class="logo">
+
+            🎬 <span>MOVIE</span> AI
+
+        </div>
+
+        <div class="nav-text">
+
+            AI Powered Recommendations
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <section class="hero">
+
+        <div class="hero-icon">
+
+            🎬
+
+        </div>
+
+
+        <h1>
+
+            MOVIE <span>AI</span>
+
+        </h1>
+
 
         <p>
-            Discover movies similar to your favourite movie
+
+            Discover your next favourite movie
+
         </p>
 
+
+        <div class="hero-line"></div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         SEARCH
+    ====================================================== -->
+
+    <div class="search-wrapper">
+
+        <div class="search-box">
+
+
+            <div class="search-heading">
+
+                <h2>🎞️ Find Similar Movies</h2>
+
+                <p>
+                    Enter a movie and let AI discover similar movies for you
+                </p>
+
+            </div>
+
+
+
+            <form method="POST">
+
+
+                <div class="form-row">
+
+
+                    <!-- LANGUAGE -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            🌐 Language
+
+                        </label>
+
+
+                        <select
+                            name="language"
+                            required
+                        >
+
+                            <option value="">
+
+                                Select Language
+
+                            </option>
+
+
+                            <option
+                                value="Malayalam"
+                                {% if language == "Malayalam" %}
+                                selected
+                                {% endif %}
+                            >
+
+                                Malayalam
+
+                            </option>
+
+
+                            <option
+                                value="Tamil"
+                                {% if language == "Tamil" %}
+                                selected
+                                {% endif %}
+                            >
+
+                                Tamil
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- MOVIE NAME -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            🎞️ Movie Name
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            name="movie_name"
+                            placeholder="Example: Raja Rani"
+                            value="{{ movie_name }}"
+                            required
+                        >
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- BUTTON -->
+
+                <button
+                    type="submit"
+                    class="recommend-btn"
+                >
+
+                    🔍 &nbsp; RECOMMEND MOVIES
+
+                </button>
+
+
+            </form>
+
+
+        </div>
+
     </div>
 
 
-    <!-- SEARCH -->
 
-    <div class="search-box">
-
-        <form method="POST">
-
-
-            <label>
-                Select Language
-            </label>
-
-
-            <select name="language" required>
-
-                <option value="">
-                    -- Select Language --
-                </option>
-
-                <option value="Malayalam"
-                    {% if language == "Malayalam" %}
-                    selected
-                    {% endif %}>
-
-                    Malayalam
-
-                </option>
-
-
-                <option value="Tamil"
-                    {% if language == "Tamil" %}
-                    selected
-                    {% endif %}>
-
-                    Tamil
-
-                </option>
-
-            </select>
-
-
-            <label>
-                Enter Movie Name
-            </label>
-
-
-            <input
-                type="text"
-                name="movie_name"
-                placeholder="Example: Raja Rani"
-                value="{{ movie_name }}"
-                required
-            >
-
-
-            <button type="submit">
-
-                🔍 Recommend Movies
-
-            </button>
-
-
-        </form>
-
-    </div>
-
-
-    <!-- ERROR MESSAGE -->
+    <!-- =====================================================
+         ERROR
+    ====================================================== -->
 
     {% if message %}
 
@@ -416,90 +1328,194 @@
     {% endif %}
 
 
-    <!-- RECOMMENDATIONS -->
+
+    <!-- =====================================================
+         RECOMMENDATIONS
+    ====================================================== -->
 
     {% if recommendations %}
 
-        <h2 class="result-title">
 
-            🎥 Recommended Movies
-
-        </h2>
+        <section class="results-section">
 
 
-        <div class="movies">
+            <div class="results-header">
 
+                <div>
 
-            {% for movie in recommendations %}
+                    <h2>
 
-                <div class="movie-card">
+                        ✨ Top <span>Recommendations</span>
 
+                    </h2>
 
-                    <div class="poster">
+                    <p>
 
-                        {% if movie.poster %}
+                        Movies selected based on content similarity
 
-                            <img
-                                src="{{ movie.poster }}"
-                                alt="{{ movie.title }}"
-                            >
-
-                        {% else %}
-
-                            🎬
-
-                        {% endif %}
-
-                    </div>
-
-
-                    <div class="movie-info">
-
-                        <h3>
-                            {{ movie.title }}
-                        </h3>
-
-
-                        <p>
-                            🎭 {{ movie.genre }}
-                        </p>
-
-
-                        <p>
-                            ⭐ Rating:
-                            {{ movie.rating }}
-                        </p>
-
-
-                        <span class="similarity">
-
-                            🤖
-                            {{ movie.similarity }}% Similar
-
-                        </span>
-
-                    </div>
-
+                    </p>
 
                 </div>
 
-            {% endfor %}
+            </div>
 
 
-        </div>
+
+            <!-- MOVIE CARDS -->
+
+            <div class="movies">
 
 
-        <div class="try-again">
+                {% for movie in recommendations %}
 
-            <a href="/">
 
-                🔄 Try Another Movie
+                    <div class="movie-card">
 
-            </a>
 
-        </div>
+                        <!-- POSTER -->
+
+                        <div class="poster">
+
+                            {% if movie.poster %}
+
+                                <img
+                                    src="{{ movie.poster }}"
+                                    alt="{{ movie.title }}"
+                                >
+
+                            {% else %}
+
+                                🎬
+
+                            {% endif %}
+
+                        </div>
+
+
+
+                        <!-- DETAILS -->
+
+                        <div class="movie-info">
+
+
+                            <h3>
+
+                                {{ movie.title }}
+
+                            </h3>
+
+
+
+                            <!-- GENRE -->
+
+                            <div class="genre">
+
+                                🎭 {{ movie.genre }}
+
+                            </div>
+
+
+
+                            <!-- RATING -->
+
+                            <div class="rating">
+
+                                ⭐ Rating:
+
+                                <strong>
+
+                                    {{ movie.rating }}
+
+                                </strong>
+
+                            </div>
+
+
+
+                            <!-- SIMILARITY -->
+
+                            <div class="similarity-area">
+
+
+                                <div class="similarity-top">
+
+                                    <span>
+
+                                        AI Similarity
+
+                                    </span>
+
+
+                                    <span class="similarity-value">
+
+                                        {{ movie.similarity }}%
+
+                                    </span>
+
+                                </div>
+
+
+                                <div class="progress">
+
+
+                                    <div
+                                        class="progress-bar"
+                                        style="width: {{ movie.similarity }}%;"
+                                    ></div>
+
+
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+
+            <!-- TRY AGAIN -->
+
+            <div class="try-again">
+
+                <a href="/">
+
+                    🔄 Try Another Movie
+
+                </a>
+
+            </div>
+
+
+        </section>
+
 
     {% endif %}
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <div class="footer">
+
+        🎬 <strong>Movie AI Recommendation System</strong>
+
+        <br><br>
+
+        Content-Based Movie Recommendation using AI
+
+    </div>
 
 
 </div>
