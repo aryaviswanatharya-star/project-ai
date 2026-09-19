@@ -912,32 +912,43 @@
 
         .movie-search {
             position: relative;
+            width: 100%;
         }
 
         .movie-suggestions {
             position: absolute;
-            top: 83px;
+            top: calc(100% - 2px);
             left: 0;
-            right: 0;
-            background: white;
-            color: #111;
+            width: 100%;
+            background: #ffffff;
+            color: #111111;
             border-radius: 10px;
             max-height: 220px;
             overflow-y: auto;
             display: none;
-            z-index: 1000;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            z-index: 99999;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            -webkit-overflow-scrolling: touch;
         }
 
         .movie-suggestion {
-            padding: 12px 16px;
+            display: block;
+            width: 100%;
+            padding: 13px 16px;
             cursor: pointer;
-            border-bottom: 1px solid #ddd;
+            background: #ffffff;
+            color: #111111;
+            border-bottom: 1px solid #dddddd;
             font-size: 14px;
+            min-height: 45px;
         }
 
         .movie-suggestion:hover {
             background: #eeeeee;
+        }
+
+        .movie-suggestion:active {
+            background: #dddddd;
         }
 
 
@@ -1154,6 +1165,16 @@
             .rating {
 
                 font-size: 12px;
+            }
+
+            .movie-suggestions {
+                max-height: 200px;
+                font-size: 14px;
+            }
+
+            .movie-suggestion {
+                padding: 14px 15px;
+                min-height: 45px;
             }
 
         }
