@@ -907,6 +907,41 @@
 
 
         /* =====================================================
+           MOVIE SEARCH SUGGESTIONS
+        ===================================================== */
+
+        .movie-search {
+            position: relative;
+        }
+
+        .movie-suggestions {
+            position: absolute;
+            top: 83px;
+            left: 0;
+            right: 0;
+            background: white;
+            color: #111;
+            border-radius: 10px;
+            max-height: 220px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        .movie-suggestion {
+            padding: 12px 16px;
+            cursor: pointer;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        .movie-suggestion:hover {
+            background: #eeeeee;
+        }
+
+
+        /* =====================================================
            FOOTER
         ===================================================== */
 
@@ -1287,61 +1322,30 @@
 
 
                     <!-- MOVIE NAME -->
-
-                    <div class="form-group">
+                    <div class="form-group movie-search">
 
                         <label>
-
                             🎞️ Movie Name
-
                         </label>
-
 
                         <input
                             type="text"
                             name="movie_name"
                             id="movie_name"
-                            list="movie_list"
                             placeholder="Select or type a movie name"
                             value="{{ movie_name }}"
                             autocomplete="off"
                             required
                         >
 
-
                         <!-- MOVIE SUGGESTIONS -->
-
-                        <datalist id="malayalam_movie_list">
-
-                            {% for movie in malayalam_movies %}
-
-                                <option value="{{ movie }}"></option>
-
-                            {% endfor %}
-
-                        </datalist>
-
-
-                        <datalist id="tamil_movie_list">
-
-                            {% for movie in tamil_movies %}
-
-                                <option value="{{ movie }}"></option>
-
-                            {% endfor %}
-
-                        </datalist>
-
+                        <div id="movieSuggestions" class="movie-suggestions"></div>
 
                         <div class="suggestion-text">
-
                             💡 Select a language and start typing to see movies from the dataset.
-
                         </div>
 
                     </div>
-
-
                 </div>
 
 
@@ -1587,84 +1591,105 @@
     const movieInput =
         document.getElementById("movie_name");
 
-
-    languageSelect.addEventListener("change", function () {
-
-        /*
-         * Clear the previous movie name
-         * when the language changes.
-         */
-
-        movieInput.value = "";
+    const suggestionsBox =
+        document.getElementById("movieSuggestions");
 
 
-        /*
-         * Change the datalist according
-         * to the selected language.
-         */
+    // Movie lists received from Flask
+    const malayalamMovies = {{ malayalam_movies | tojson }};
+    const tamilMovies = {{ tamil_movies | tojson }};
 
-        if (this.value === "Malayalam") {
 
-            movieInput.setAttribute(
-                "list",
-                "malayalam_movie_list"
-            );
+    // Show matching movies while typing
+    movieInput.addEventListener("input", function () {
 
-            movieInput.placeholder =
-                "Select or type a Malayalam movie";
+        const searchText =
+            movieInput.value.trim().toLowerCase();
 
+        suggestionsBox.innerHTML = "";
+
+
+        if (searchText === "") {
+            suggestionsBox.style.display = "none";
+            return;
         }
 
-        else if (this.value === "Tamil") {
 
-            movieInput.setAttribute(
-                "list",
-                "tamil_movie_list"
-            );
+        let movies = [];
 
-            movieInput.placeholder =
-                "Select or type a Tamil movie";
 
+        if (languageSelect.value === "Malayalam") {
+            movies = malayalamMovies;
+        }
+
+        else if (languageSelect.value === "Tamil") {
+            movies = tamilMovies;
         }
 
         else {
+            suggestionsBox.style.display = "none";
+            return;
+        }
 
-            movieInput.removeAttribute("list");
 
-            movieInput.placeholder =
-                "Select or type a movie name";
+        // Find movies containing the typed letters
+        const matches = movies.filter(movie =>
+            String(movie).toLowerCase().includes(searchText)
+        );
+
+
+        // Show maximum 10 suggestions
+        matches.slice(0, 10).forEach(movie => {
+
+            const suggestion =
+                document.createElement("div");
+
+            suggestion.className = "movie-suggestion";
+            suggestion.textContent = movie;
+
+
+            suggestion.addEventListener("click", function () {
+
+                movieInput.value = movie;
+                suggestionsBox.style.display = "none";
+
+            });
+
+
+            suggestionsBox.appendChild(suggestion);
+
+        });
+
+
+        if (matches.length > 0) {
+            suggestionsBox.style.display = "block";
+        }
+
+        else {
+            suggestionsBox.style.display = "none";
         }
 
     });
 
 
-    /*
-     * Set the correct movie list when the
-     * page is loaded after a POST request.
-     */
+    // Clear movie suggestions when language changes
+    languageSelect.addEventListener("change", function () {
 
-    if (languageSelect.value === "Malayalam") {
+        movieInput.value = "";
+        suggestionsBox.innerHTML = "";
+        suggestionsBox.style.display = "none";
 
-        movieInput.setAttribute(
-            "list",
-            "malayalam_movie_list"
-        );
+    });
 
-        movieInput.placeholder =
-            "Select or type a Malayalam movie";
 
-    }
+    // Close suggestions when clicking outside the movie box
+    document.addEventListener("click", function (event) {
 
-    else if (languageSelect.value === "Tamil") {
+        if (!event.target.closest(".movie-search")) {
+            suggestionsBox.style.display = "none";
+        }
 
-        movieInput.setAttribute(
-            "list",
-            "tamil_movie_list"
-        );
-
-        movieInput.placeholder =
-            "Select or type a Tamil movie";
-    }
+    });
 
 </script>
 
