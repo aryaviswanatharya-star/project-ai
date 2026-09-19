@@ -4,8 +4,8 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 # Load the datasets
-mal = pd.read_csv("malayalam_movies_final_2.csv")
-tam = pd.read_csv("Tamil_movies_dataset.csv")
+mal = pd.read_csv("malayalam_movies.csv")
+tam = pd.read_csv("Tamil_movies.csv")
 
 # Display first 5 rows
 print("========== Malayalam Dataset ==========")

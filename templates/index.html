@@ -43,11 +43,13 @@
                     rgba(139, 0, 0, 0.45),
                     transparent 35%
                 ),
+
                 radial-gradient(
                     circle at bottom left,
                     rgba(90, 0, 0, 0.35),
                     transparent 30%
                 ),
+
                 linear-gradient(
                     135deg,
                     #000000 0%,
@@ -400,6 +402,23 @@
         input::placeholder {
 
             color: #777;
+        }
+
+
+
+        /* =====================================================
+           MOVIE SUGGESTION NOTE
+        ===================================================== */
+
+        .suggestion-text {
+
+            margin-top: 7px;
+
+            font-size: 11px;
+
+            color: #aaa;
+
+            text-align: left;
         }
 
 
@@ -1227,6 +1246,7 @@
 
                         <select
                             name="language"
+                            id="language"
                             required
                         >
 
@@ -1280,10 +1300,44 @@
                         <input
                             type="text"
                             name="movie_name"
-                            placeholder="Example: Raja Rani"
+                            id="movie_name"
+                            list="movie_list"
+                            placeholder="Select or type a movie name"
                             value="{{ movie_name }}"
+                            autocomplete="off"
                             required
                         >
+
+
+                        <!-- MOVIE SUGGESTIONS -->
+
+                        <datalist id="malayalam_movie_list">
+
+                            {% for movie in malayalam_movies %}
+
+                                <option value="{{ movie }}"></option>
+
+                            {% endfor %}
+
+                        </datalist>
+
+
+                        <datalist id="tamil_movie_list">
+
+                            {% for movie in tamil_movies %}
+
+                                <option value="{{ movie }}"></option>
+
+                            {% endfor %}
+
+                        </datalist>
+
+
+                        <div class="suggestion-text">
+
+                            💡 Select a language and start typing to see movies from the dataset.
+
+                        </div>
 
                     </div>
 
@@ -1381,6 +1435,7 @@
                                 <img
                                     src="{{ movie.poster }}"
                                     alt="{{ movie.title }}"
+                                    loading="lazy"
                                 >
 
                             {% else %}
@@ -1457,12 +1512,10 @@
 
                                 <div class="progress">
 
-
                                     <div
                                         class="progress-bar"
                                         style="width: {{ movie.similarity }}%;"
                                     ></div>
-
 
                                 </div>
 
@@ -1519,6 +1572,101 @@
 
 
 </div>
+
+
+
+<!-- =====================================================
+     MOVIE SUGGESTION JAVASCRIPT
+====================================================== -->
+
+<script>
+
+    const languageSelect =
+        document.getElementById("language");
+
+    const movieInput =
+        document.getElementById("movie_name");
+
+
+    languageSelect.addEventListener("change", function () {
+
+        /*
+         * Clear the previous movie name
+         * when the language changes.
+         */
+
+        movieInput.value = "";
+
+
+        /*
+         * Change the datalist according
+         * to the selected language.
+         */
+
+        if (this.value === "Malayalam") {
+
+            movieInput.setAttribute(
+                "list",
+                "malayalam_movie_list"
+            );
+
+            movieInput.placeholder =
+                "Select or type a Malayalam movie";
+
+        }
+
+        else if (this.value === "Tamil") {
+
+            movieInput.setAttribute(
+                "list",
+                "tamil_movie_list"
+            );
+
+            movieInput.placeholder =
+                "Select or type a Tamil movie";
+
+        }
+
+        else {
+
+            movieInput.removeAttribute("list");
+
+            movieInput.placeholder =
+                "Select or type a movie name";
+        }
+
+    });
+
+
+    /*
+     * Set the correct movie list when the
+     * page is loaded after a POST request.
+     */
+
+    if (languageSelect.value === "Malayalam") {
+
+        movieInput.setAttribute(
+            "list",
+            "malayalam_movie_list"
+        );
+
+        movieInput.placeholder =
+            "Select or type a Malayalam movie";
+
+    }
+
+    else if (languageSelect.value === "Tamil") {
+
+        movieInput.setAttribute(
+            "list",
+            "tamil_movie_list"
+        );
+
+        movieInput.placeholder =
+            "Select or type a Tamil movie";
+    }
+
+</script>
 
 
 </body>

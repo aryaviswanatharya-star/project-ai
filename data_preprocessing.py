@@ -32,8 +32,8 @@ mal[["rating", "vote_count", "popularity", "runtime"]] = scaler.fit_transform(
     mal[["rating", "vote_count", "popularity", "runtime"]]
 )
 
-tam[["Rating", "PeopleVote", "Hero_Rating", "movie_rating"]] = scaler.fit_transform(
-    tam[["Rating", "PeopleVote", "Hero_Rating", "movie_rating"]]
+tam[["Rating", "PeopleVote", "Hero_Rating"]] = scaler.fit_transform(
+    tam[["Rating", "PeopleVote", "Hero_Rating"]]
 )
 
 print("\nFeature Scaling Completed Successfully")

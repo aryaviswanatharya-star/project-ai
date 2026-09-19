@@ -3,20 +3,26 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 
-# =========================================================
+# ============================================================
 # MALAYALAM MOVIE RECOMMENDATION
-# =========================================================
+# ============================================================
 
-# Load Malayalam dataset
 mal = pd.read_csv("malayalam_movies.csv")
 
-# Remove missing values from required columns
+# Remove rows with missing values in required columns
 mal = mal.dropna(
-    subset=["title", "genres", "keywords", "cast", "directors", "overview"]
+    subset=[
+        "title",
+        "genres",
+        "keywords",
+        "cast",
+        "directors",
+        "overview"
+    ]
 ).reset_index(drop=True)
 
 
-# Create Tags
+# Create tags
 mal["tags"] = (
     mal["genres"].astype(str) + " " +
     mal["keywords"].astype(str) + " " +
@@ -26,24 +32,27 @@ mal["tags"] = (
 )
 
 
-# Convert text into numerical vectors
+# Malayalam CountVectorizer
 cv = CountVectorizer(
     max_features=5000,
     stop_words="english"
 )
 
+
+# Convert movie tags into vectors
 movie_vectors = cv.fit_transform(mal["tags"]).toarray()
 
 
-# Calculate Cosine Similarity
+# Calculate cosine similarity
 similarity = cosine_similarity(movie_vectors)
 
 
-# Malayalam Recommendation Function
 def recommend(movie_name):
 
+    # Clean entered movie name
     movie_name = movie_name.strip().lower()
 
+    # Convert titles to lowercase
     movie_titles = (
         mal["title"]
         .astype(str)
@@ -51,7 +60,7 @@ def recommend(movie_name):
         .str.lower()
     )
 
-    # Check movie
+    # Check whether movie exists
     if movie_name not in movie_titles.values:
         return []
 
@@ -74,33 +83,21 @@ def recommend(movie_name):
 
     recommendations = []
 
-    for i, score in similarity_scores:
+    # Get top 5 similar movies
+    for index, score in similarity_scores:
 
-        # Skip selected movie
-        if i == movie_index:
+        # Skip the movie entered by the user
+        if index == movie_index:
             continue
 
-        movie = mal.iloc[i]
-
-        # Get rating safely
-        rating = movie["rating"] if "rating" in mal.columns else "N/A"
-
-        # Get genre safely
-        genre = movie["genres"] if "genres" in mal.columns else "N/A"
-
-        # Get poster safely
-        poster = (
-            movie["poster_url"]
-            if "poster_url" in mal.columns
-            else ""
-        )
+        movie = mal.iloc[index]
 
         recommendations.append({
             "title": movie["title"],
-            "genre": genre,
-            "rating": rating,
-            "similarity": round(score * 100, 1),
-            "poster": poster
+            "genre": movie["genres"],
+            "rating": movie["rating"],
+            "similarity": round(score * 100, 2),
+            "poster": movie.get("poster_url", "")
         })
 
         if len(recommendations) == 5:
@@ -109,43 +106,60 @@ def recommend(movie_name):
     return recommendations
 
 
-# =========================================================
+# ============================================================
 # TAMIL MOVIE RECOMMENDATION
-# =========================================================
+# ============================================================
 
-# Load Tamil dataset
 tam = pd.read_csv("tamil_movies.csv")
 
+# Replace missing values
+tam = tam.fillna("")
 
-# Create Tags
-tam["tags"] = (
-    tam["Genre"].astype(str) + " " +
-    tam["Director"].astype(str) + " " +
-    tam["Actor"].astype(str)
+
+# Convert required columns to strings
+tam["Genre"] = tam["Genre"].astype(str)
+tam["Director"] = tam["Director"].astype(str)
+tam["Actor"] = tam["Actor"].astype(str)
+
+
+# Create Tamil movie tags
+tamil_tags = (
+    tam["Genre"] + " " +
+    tam["Director"] + " " +
+    tam["Actor"]
 )
 
 
-# Convert Tamil movie tags into numerical vectors
+# Make sure all tags are strings
+tamil_tags = tamil_tags.astype(str)
+
+
+# Tamil CountVectorizer
 cv_tamil = CountVectorizer(
+    input="content",
+    max_features=5000,
     stop_words="english"
 )
 
-tamil_vectors = cv_tamil.fit_transform(
-    tam["tags"]
-).toarray()
 
-
-# Calculate Tamil Cosine Similarity
-tamil_similarity = cosine_similarity(
-    tamil_vectors
+# Convert Tamil movie tags into vectors
+tam_vectors = cv_tamil.fit_transform(
+    tamil_tags
 )
 
 
-# Tamil Recommendation Function
+# Calculate Tamil cosine similarity
+tamil_similarity = cosine_similarity(
+    tam_vectors
+)
+
+
 def recommend_tamil(movie_name):
 
+    # Clean entered movie name
     movie_name = movie_name.strip().lower()
 
+    # Convert Tamil movie names to lowercase
     movie_titles = (
         tam["MovieName"]
         .astype(str)
@@ -153,7 +167,7 @@ def recommend_tamil(movie_name):
         .str.lower()
     )
 
-    # Check movie
+    # Check whether movie exists
     if movie_name not in movie_titles.values:
         return []
 
@@ -164,9 +178,7 @@ def recommend_tamil(movie_name):
 
     # Get similarity scores
     similarity_scores = list(
-        enumerate(
-            tamil_similarity[movie_index]
-        )
+        enumerate(tamil_similarity[movie_index])
     )
 
     # Sort by similarity
@@ -178,27 +190,27 @@ def recommend_tamil(movie_name):
 
     recommendations = []
 
-    for i, score in similarity_scores:
+    # Get top 5 similar movies
+    for index, score in similarity_scores:
 
-        # Skip selected movie
-        if i == movie_index:
+        # Skip the selected movie
+        if index == movie_index:
             continue
 
-        movie = tam.iloc[i]
+        movie = tam.iloc[index]
 
-        # Get rating
-        if "Rating" in tam.columns:
-            rating = movie["Rating"]
-        elif "movie_rating" in tam.columns:
+        # Select rating
+        rating = movie["Rating"]
+
+        # If Rating is empty, use movie_rating
+        if str(rating).strip() == "":
             rating = movie["movie_rating"]
-        else:
-            rating = "N/A"
 
         recommendations.append({
             "title": movie["MovieName"],
             "genre": movie["Genre"],
             "rating": rating,
-            "similarity": round(score * 100, 1),
+            "similarity": round(score * 100, 2),
             "poster": ""
         })
 

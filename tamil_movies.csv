@@ -328,3 +328,53 @@ Dev,Action,4.8,Rajath Ravishankar,Karthi,724,2019,5,8,5.933333333
 Charlie Chaplin 2,Comedy,3.8,Sakthi Chidambaram,Prabhu Deva,215,2019,4,7,4.933333333
 Petta,Action,7.3,Karthik Subbaraj,Rajinikanth,7545,2019,8,8,7.766666667
 Viswasam,Action,6.7,Siva,Ajith Kumar,5907,2019,8,9,7.9
+Master	Action, Thriller	7.3	Lokesh Kanagaraj	Vijay	75000	2021	9.0	Hit	U/A
+Beast	Action, Thriller	5.2	Nelson Dilipkumar	Vijay	65000	2022	8.5	Average	U/A
+Varisu	Action, Drama	6.0	Vamshi Paidipally	Vijay	45000	2023	8.5	Hit	U
+Leo	Action, Thriller	7.2	Lokesh Kanagaraj	Vijay	130000	2023	9.5	Blockbuster	U/A
+The Greatest of All Time	Action, Sci-Fi	6.5	Venkat Prabhu	Vijay	50000	2024	9.0	Hit	U/A
+Jana Nayagan	Action, Thriller	8.0	H. Vinoth	Vijay	85000	2026	9.5	Blockbuster	U/A
+Soorarai Pottru	Drama, Biography	8.7	Sudha Kongara	Suriya	125000	2020	9.5	Blockbuster	U
+Jai Bhim	Crime, Drama	8.8	T. J. Gnanavel	Suriya	225000	2021	9.5	Blockbuster	A
+Etharkkum Thunindhavan	Action, Drama	6.5	Pandiraj	Suriya	25000	2022	8.0	Hit	U/A
+Kanguva	Action, Fantasy	7.0	Siva	Suriya	40000	2024	8.5	Hit	U/A
+Karuppu	Action	7.5	RJ Balaji	Suriya	35000	2026	8.8	Hit	U/A
+Vishwanath & Sons	Drama	7.8	Unknown	Suriya	25000	2026	9.0	Hit	U/A
+Doctor	Action, Comedy	7.4	Nelson Dilipkumar	Sivakarthikeyan	48000	2021	8.5	Blockbuster	U/A
+Don	Comedy, Drama	6.8	Cibi Chakaravarthi	Sivakarthikeyan	32000	2022	8.0	Blockbuster	U
+Maaveeran	Action, Fantasy	7.3	Madonne Ashwin	Sivakarthikeyan	38000	2023	8.5	Hit	U/A
+Amaran	Action, Drama	8.1	Rajkumar Periasamy	Sivakarthikeyan	65000	2024	9.0	Blockbuster	U/A
+Parasakthi	Thriller, Drama	8.2	Sudha Kongara	Sivakarthikeyan	50000	2026	9.0	Blockbuster	U/A
+Mahaan	Action, Drama	7.5	Karthik Subbaraj	Vikram	38000	2022	9.0	Hit	U/A
+Ponniyin Selvan: I	Action, Drama	7.6	Mani Ratnam	Vikram	85000	2022	9.0	Blockbuster	U/A
+Ponniyin Selvan: II	Action, Drama	7.3	Mani Ratnam	Vikram	55000	2023	9.0	Hit	U/A
+Thangalaan	Action, Adventure	7.2	Pa. Ranjith	Vikram	35000	2024	9.0	Hit	U/A
+Vikram	Action, Thriller	8.3	Lokesh Kanagaraj	Kamal Haasan	155000	2022	9.5	Blockbuster	U/A
+Jailer	Action, Comedy	7.1	Nelson Dilipkumar	Rajinikanth	95000	2023	9.5	Blockbuster	U/A
+Coolie	Action, Thriller	7.5	Lokesh Kanagaraj	Rajinikanth	80000	2025	9.0	Blockbuster	U/A
+Good Bad Ugly	Action, Thriller	7.0	Adhik Ravichandran	Ajith Kumar	60000	2025	9.0	Hit	U/A
+Master,"Action, Thriller",7.3,Lokesh Kanagaraj,Vijay,75000,2021,9.0,Hit,U/A
+Beast,"Action, Thriller",5.2,Nelson Dilipkumar,Vijay,65000,2022,8.5,Average,U/A
+Varisu,"Action, Drama",6.0,Vamshi Paidipally,Vijay,45000,2023,8.5,Hit,U
+Leo,"Action, Thriller",7.2,Lokesh Kanagaraj,Vijay,130000,2023,9.5,Blockbuster,U/A
+The Greatest of All Time,"Action, Sci-Fi",6.5,Venkat Prabhu,Vijay,50000,2024,9.0,Hit,U/A
+Jana Nayagan,"Action, Thriller",8.0,H. Vinoth,Vijay,85000,2026,9.5,Blockbuster,U/A
+Soorarai Pottru,"Drama, Biography",8.7,Sudha Kongara,Suriya,125000,2020,9.5,Blockbuster,U
+Jai Bhim,"Crime, Drama",8.8,T. J. Gnanavel,Suriya,225000,2021,9.5,Blockbuster,A
+Etharkkum Thunindhavan,"Action, Drama",6.5,Pandiraj,Suriya,25000,2022,8.0,Hit,U/A
+Kanguva,"Action, Fantasy",7.0,Siva,Suriya,40000,2024,8.5,Hit,U/A
+Karuppu,Action,7.5,RJ Balaji,Suriya,35000,2026,8.8,Hit,U/A
+Vishwanath & Sons,Drama,7.8,Unknown,Suriya,25000,2026,9.0,Hit,U/A
+Doctor,"Action, Comedy",7.4,Nelson Dilipkumar,Sivakarthikeyan,48000,2021,8.5,Blockbuster,U/A
+Don,"Comedy, Drama",6.8,Cibi Chakaravarthi,Sivakarthikeyan,32000,2022,8.0,Blockbuster,U
+Maaveeran,"Action, Fantasy",7.3,Madonne Ashwin,Sivakarthikeyan,38000,2023,8.5,Hit,U/A
+Amaran,"Action, Drama",8.1,Rajkumar Periasamy,Sivakarthikeyan,65000,2024,9.0,Blockbuster,U/A
+Parasakthi,"Thriller, Drama",8.2,Sudha Kongara,Sivakarthikeyan,50000,2026,9.0,Blockbuster,U/A
+Mahaan,"Action, Drama",7.5,Karthik Subbaraj,Vikram,38000,2022,9.0,Hit,U/A
+Ponniyin Selvan: I,"Action, Drama",7.6,Mani Ratnam,Vikram,85000,2022,9.0,Blockbuster,U/A
+Ponniyin Selvan: II,"Action, Drama",7.3,Mani Ratnam,Vikram,55000,2023,9.0,Hit,U/A
+Thangalaan,"Action, Adventure",7.2,Pa. Ranjith,Vikram,35000,2024,9.0,Hit,U/A
+Vikram,"Action, Thriller",8.3,Lokesh Kanagaraj,Kamal Haasan,155000,2022,9.5,Blockbuster,U/A
+Jailer,"Action, Comedy",7.1,Nelson Dilipkumar,Rajinikanth,95000,2023,9.5,Blockbuster,U/A
+Coolie,"Action, Thriller",7.5,Lokesh Kanagaraj,Rajinikanth,80000,2025,9.0,Blockbuster,U/A
+Good Bad Ugly,"Action, Thriller",7.0,Adhik Ravichandran,Ajith Kumar,60000,2025,9.0,Hit,U/A
